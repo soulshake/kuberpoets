@@ -13,7 +13,6 @@ main() {
 
     tee "${dist_dir}/env.js" >&2 << EOF
 window.env = {
-    ENV: "${ENV:-local}",
     VERSION: "${VERSION:-unknown}",
 }
 console.log(window.env)

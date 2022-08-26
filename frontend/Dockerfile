@@ -18,8 +18,9 @@ FROM base as build
 ENV NODE_ENV=production
 RUN npm run build
 
-FROM nginx:1.22-alpine
+FROM nginx:1.22-alpine as production
 WORKDIR /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/build /usr/share/nginx/html
 COPY --from=build /app/entrypoint.sh /app/
 CMD ["nginx", "-g", "daemon off;"]
