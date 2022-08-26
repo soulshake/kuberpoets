@@ -20,6 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "copyenv": "./entrypoint.sh echo DONE",
     "start": "DIST_DIR=./public ./entrypoint.sh react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

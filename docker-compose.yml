@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  frontend:
+    build:
+      args:
+        NODE_ENV: development
+      context: frontend
+      target: development
+    environment:
+      DIST_DIR: /app/public
+    volumes:
+      - ./:/app
+    ports:
+      - 3000:3000
