@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 interface Input {}
 
-function NameForm(props: Input) {
+function InputForm(props: Input) {
   const [term, setTerm] = useState('');
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,4 +35,4 @@ function NameForm(props: Input) {
   );
 }
 
-export default NameForm;
+export default InputForm;
