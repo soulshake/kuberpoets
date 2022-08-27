@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useAppValues } from '../AppContext';
 
-interface Input {}
-
-function InputForm(props: Input) {
-  const [term, setTerm] = useState('');
+function InputForm() {
+  const { setAppValues } = useAppValues();
+  const [fullBlob, setBlob] = useState('');
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Got input: ', term);
+
+    const lines: Array<string> = fullBlob.trim().split('\n');
+    setAppValues({
+      blob: fullBlob,
+      blobs: lines,
+    });
   };
 
   return (
@@ -20,9 +25,9 @@ function InputForm(props: Input) {
           id='user-input'
           label='Enter some text'
           multiline
-          onChange={e => setTerm(e.target.value)}
+          onChange={e => setBlob(e.target.value)}
           type='text'
-          value={term}
+          value={fullBlob}
           variant='outlined'
         />
         <div>
