@@ -5,8 +5,8 @@ import { ResultList } from './components/Result';
 
 import { AppProvider } from './AppContext';
 
-// export const App = () => (
-function App() {
+// function App() {
+export const App = () => {
   return (
     <AppProvider>
       <div className='App'>
@@ -18,6 +18,6 @@ function App() {
       </div>
     </AppProvider>
   );
-}
+};
 
 export default App;

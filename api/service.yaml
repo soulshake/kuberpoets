@@ -28,6 +28,7 @@ metadata:
   name: api
 data:
   VERSION: '${VERSION}'
+  FLASK_DEBUG: '1'
 ---
 apiVersion: v1
 kind: Service
