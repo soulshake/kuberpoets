@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppValues } from '../AppContext';
 import { analyzeString, ResultError } from '../Api';
 
 export function ResultList() {
   const { blobs } = useAppValues().getAppValues();
   console.log('in ResultList', blobs);
+
   return (
     <div>
-      {blobs?.length && <p>This poem feels...</p>}
+      {(blobs?.length && <p>This poem feels...</p>) || ''}
       <ul>
         {blobs &&
           blobs.map((blob: string) => {
@@ -22,53 +23,35 @@ interface ResultItem {
   text: string;
 }
 export function Result(props: ResultItem) {
-  const [text, setText] = useState(props.text);
-  let wat: Array<ResultError> = [];
-  const [errors, setErrors] = useState(wat);
+  const text = props.text;
+  let emptyErrorList: Array<ResultError> = [];
+  const [errors, setErrors] = useState(emptyErrorList);
   const [sentiment, setSentiment] = useState('pending');
+  const [duration, setDuration] = useState('pending');
 
-  let shouldFetch = false;
-  if (props.text && props.text !== text) {
-    shouldFetch = true;
-    setText(props.text);
-    setErrors([]);
-    console.log('blanking errs, changing text to', props.text);
-  }
-  if (sentiment === 'pending') {
-    shouldFetch = true;
-  }
-  if (shouldFetch) {
+  useEffect(() => {
+    console.warn(`text is ${text}, FETCHING`);
     analyzeString(text)
       .then(data => {
         if (data) {
-          console.log('got data back', data);
           setSentiment(data.sentiment);
-          if (data.errors) {
-            console.log('setting errors here', data.errors);
-            setErrors(data.errors);
+          setDuration(data.duration);
+          setErrors(data.errors);
+          if (data.errors.length) {
+            console.error(`errors for line: ${text} ${JSON.stringify(data.errors)}`);
           }
-        } else {
-          console.warn('got no data back :(');
         }
       })
       .catch(err => {
         console.error('ach scheisse', err);
         setErrors([{ message: err.message }]);
       });
-  }
+  }, []);
 
-  if (errors.length) {
-    console.error('errors', errors);
-  }
-  for (const e of errors) {
-    console.error('reeee', e.message);
-  }
   return (
     <div className='container'>
       <div>
-        <p>
-          {text} ({sentiment}){errors && <ErrorList errors={errors} />}
-        </p>
+        {text} ({sentiment}, {duration} ms){errors && <ErrorList errors={errors} />}
       </div>
     </div>
   );

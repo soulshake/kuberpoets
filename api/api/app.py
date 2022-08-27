@@ -1,4 +1,5 @@
 import logging
+import time
 from logging.config import dictConfig
 from flask import Flask, has_request_context, request
 from flask_cors import CORS
@@ -60,6 +61,8 @@ def health():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
+    start = time.time()
+
     errors = []
     sentiment = "wut"
     text = request.json.get("text")
@@ -75,6 +78,8 @@ def analyze():
     else:
         errors.append({"message": "no request json received"})
 
-    ret = {"data": {"sentiment": sentiment, "errors": errors}}
+    end = time.time()
+    duration = round((end - start) * 1000, 4)
+    ret = {"data": {"sentiment": sentiment, "duration": duration, "errors": errors}}
     app.logger.info(ret)
     return ret

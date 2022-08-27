@@ -5,7 +5,6 @@ import { ResultList } from './components/Result';
 
 import { AppProvider } from './AppContext';
 
-// function App() {
 export const App = () => {
   return (
     <AppProvider>

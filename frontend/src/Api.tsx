@@ -4,6 +4,7 @@ export type ResultError = {
 };
 type ResultData = {
   sentiment: string;
+  duration: string;
   errors: Array<ResultError>;
 };
 
@@ -27,7 +28,7 @@ export async function analyzeString(text: string): Promise<ResultData> {
 
   const { data }: JSONResponse = await response.json();
   if (response.ok) {
-    console.log(`got response: data=${data}`);
+    console.log(`got response: data=${JSON.stringify(data)}`);
     if (data && data.sentiment && data.errors) {
       return data;
     }
