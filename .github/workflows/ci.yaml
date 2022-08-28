@@ -1,0 +1,24 @@
+name: Test and build
+on:
+  pull_request:
+
+jobs:
+  test_frontend:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run frontend tests
+        run: |
+          cd frontend/
+          npm ci
+          npm run test
+
+  build_images:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build images
+        run: |
+          docker-compose build
