@@ -22,6 +22,8 @@ From the repo root, run:
 docker-compose up
 ```
 
+Note that live-reloading is better supported in Tilt than Compose.
+
 ### Frontend
 
 #### Natively

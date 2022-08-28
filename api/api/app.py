@@ -64,7 +64,7 @@ def analyze():
     start = time.time()
 
     errors = []
-    sentiment = "wut"
+    sentiment = "empty"
     text = request.json.get("text")
     if text:
         app.logger.info(f"Analyzing: {text}")

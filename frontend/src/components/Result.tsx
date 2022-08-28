@@ -4,17 +4,19 @@ import { analyzeString, ResultError } from '../Api';
 
 export function ResultList() {
   const { blobs } = useAppValues().getAppValues();
-  console.log('in ResultList', blobs);
+  console.debug('in ResultList', blobs);
+
+  if (!blobs || !blobs.length) {
+    return null;
+  }
+  const blobList = blobs.map((blob, index) => (
+    <li key={index}>{<Result text={blob} />}</li>
+  ));
 
   return (
     <div>
-      {(blobs?.length && <p>This poem feels...</p>) || ''}
-      <ul>
-        {blobs &&
-          blobs.map((blob: string) => {
-            return <li key={blob}>{<Result text={blob} />}</li>;
-          })}
-      </ul>
+      <p>This poem feels...</p>
+      <ul>{blobList}</ul>
     </div>
   );
 }
@@ -46,7 +48,7 @@ export function Result(props: ResultItem) {
         console.error('ach scheisse', err);
         setErrors([{ message: err.message }]);
       });
-  }, []);
+  }, [text]);
 
   return (
     <div className='container'>
