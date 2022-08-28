@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5000';
+const API_URL = window.env.API_URL;
+
 export type ResultError = {
   message: string;
 };
@@ -10,13 +11,13 @@ type ResultData = {
 
 type JSONResponse = {
   data?: ResultData;
-  // errors?: Array<ResultError>;
 };
 
 export async function analyzeString(text: string): Promise<ResultData> {
-  console.debug('querying api', text);
+  const path = '/analyze';
+  console.log(`querying API_URL=${API_URL} path=${path} text=${text}`);
 
-  const response = await window.fetch(`${API_URL}/analyze`, {
+  const response = await window.fetch(`${API_URL}${path}`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json;charset=UTF-8',
@@ -26,9 +27,11 @@ export async function analyzeString(text: string): Promise<ResultData> {
     }),
   });
 
-  const { data }: JSONResponse = await response.json();
+  console.log(response);
+
   if (response.ok) {
-    console.log(`got response: data=${JSON.stringify(data)}`);
+    const { data }: JSONResponse = await response.json();
+    console.debug(`got response: data=${JSON.stringify(data)}`);
     if (data && data.sentiment && data.errors) {
       return data;
     }
@@ -37,8 +40,10 @@ export async function analyzeString(text: string): Promise<ResultData> {
       new Error(`Response didn't match expected format: ${JSON.stringify(data)}`),
     );
   }
-  // we shouldn't be here
+
   return Promise.reject(
-    new Error(`No result could be retrieved, but also got no errors`),
+    new Error(
+      `Got ${response.status} for ${response.url}: ${response.statusText}, API_URL=${API_URL}`,
+    ),
   );
 }

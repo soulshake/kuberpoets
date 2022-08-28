@@ -39,7 +39,7 @@ const AppContext = createContext<AppProviderValue | null>(null);
 export function useAppValues() {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useAppValues() must be used within a AppProvider.');
+    throw new Error('useAppValues() must be used within an AppProvider.');
   }
   return context;
 }

@@ -46,6 +46,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
+  annotations: &annotations
+    reloader.stakater.com/auto: 'true'
   labels: &labels
     app: api
 spec:
@@ -54,6 +56,7 @@ spec:
       app: api
   template:
     metadata:
+      annotations: *annotations
       labels: *labels
     spec:
       containers:

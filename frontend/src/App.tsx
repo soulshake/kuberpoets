@@ -5,6 +5,15 @@ import { ResultList } from './components/Result';
 
 import { AppProvider } from './AppContext';
 
+declare global {
+  interface Window {
+    env: {
+      VERSION: string;
+      API_URL: string;
+    };
+  }
+}
+
 export const App = () => {
   return (
     <AppProvider>
