@@ -14,7 +14,7 @@ From the repo root, run:
 tilt up
 ```
 
-#### In Tilt
+#### In Docker Compose
 
 From the repo root, run:
 
@@ -28,7 +28,7 @@ Note that live-reloading is better supported in Tilt than Compose.
 
 #### Natively
 
-From the `./frontend/` directory, run:
+From the `frontend/` directory, run:
 
 ```
 npm ci
@@ -39,7 +39,7 @@ Browse to http://localhost:3000.
 
 #### In Docker
 
-From the `./frontend/` directory, run:
+From the `frontend/` directory, run:
 
 ```
 docker build -t kuberpoets .
