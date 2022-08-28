@@ -29,6 +29,7 @@ metadata:
 data:
   DIST_DIR: '${DIST_DIR}'
   VERSION: '${VERSION}'
+  API_URL: '${API_URL}'
 ---
 apiVersion: v1
 kind: Service
@@ -46,6 +47,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  annotations: &annotations
+    reloader.stakater.com/auto: 'true'
   labels: &labels
     app: frontend
 spec:
@@ -54,6 +57,7 @@ spec:
       app: frontend
   template:
     metadata:
+      annotations: *annotations
       labels: *labels
     spec:
       containers:

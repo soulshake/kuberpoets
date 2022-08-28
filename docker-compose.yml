@@ -1,5 +1,17 @@
 version: '3.7'
 services:
+  api:
+    build:
+      args:
+        FLASK_DEBUG: ${FLASK_DEBUG:-0}
+      context: api
+    environment:
+      FLASK_DEBUG: ${FLASK_DEBUG:-0}
+    volumes:
+      - ./api/:/app
+    ports:
+      - 5000:5000
+
   frontend:
     build:
       args:
@@ -8,7 +20,8 @@ services:
       target: development
     environment:
       DIST_DIR: /app/public
+      API_URL: http://localhost:5000
     volumes:
-      - ./:/app
+      - ./frontend/:/app
     ports:
       - 3000:3000
