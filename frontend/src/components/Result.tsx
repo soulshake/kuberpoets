@@ -12,7 +12,7 @@ export function ResultList(props: ResultListProps) {
   }
   console.log('in ResultList', submittedBlob);
   const blobs: Array<string> = submittedBlob.trim().split('\n');
-  console.warn('blobs is', blobs);
+  console.log('blobs is', blobs);
 
   const blobList = blobs.map((submittedBlob, index) => (
     <li key={index}>{<Result text={submittedBlob} />}</li>
@@ -47,7 +47,7 @@ export function Result(props: ResultItem) {
     setSentiment('');
     setDuration('');
     setErrors(emptyErrorList);
-    console.warn(`text is ${text}, FETCHING`);
+    console.log(`text is ${text}, FETCHING`);
     analyzeString(text)
       .then(data => {
         if (data) {

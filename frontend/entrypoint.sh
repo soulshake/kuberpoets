@@ -14,7 +14,7 @@ main() {
     tee "${dist_dir}/env.js" >&2 << EOF
 window.env = {
     VERSION: "${VERSION:-unknown}",
-    API_URL: "${API_URL:-please-set-API_URL-envvar}",
+    API_URL: "${API_URL:-http://localhost:5000}",
 }
 console.log(window.env)
 EOF

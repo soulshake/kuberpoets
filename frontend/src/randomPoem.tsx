@@ -34,5 +34,4 @@ const poems = [mask, poetry];
 
 export default function getRandom() {
   return poems[(Math.random() * poems.length) | 0];
-  // return mask;
 }

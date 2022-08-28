@@ -28,7 +28,7 @@ metadata:
   name: api
 data:
   VERSION: '${VERSION}'
-  FLASK_DEBUG: '1'
+  FLASK_DEBUG: '${FLASK_DEBUG}'
 ---
 apiVersion: v1
 kind: Service

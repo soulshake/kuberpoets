@@ -12,7 +12,7 @@ function InputForm(props: InputFormProps) {
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.warn(`setting submitted blob to: '${blob}'`);
+    console.log(`setting submitted blob to: '${blob}'`);
     setSubmittedBlob(blob);
   };
 
@@ -22,6 +22,7 @@ function InputForm(props: InputFormProps) {
         <TextField
           autoFocus
           fullWidth
+          id='user-input'
           label='Enter some text'
           multiline
           onChange={e => setBlob(e.target.value)}
