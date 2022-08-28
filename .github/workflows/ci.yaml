@@ -28,3 +28,14 @@ jobs:
           cd frontend/
           npm ci
           npm run test
+
+  build_push_e2e:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Build, tag, and push images
+        run: |
+          docker-compose build
