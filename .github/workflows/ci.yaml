@@ -1,0 +1,28 @@
+---
+name: Test
+on:
+  pull_request:
+
+jobs:
+  test:
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Display Github event details
+        continue-on-error: true
+        run: |
+          echo "::group::Env"
+          env
+          echo "::endgroup::"
+
+          echo "::group::Github event"
+          cat "$GITHUB_EVENT_PATH" | jq -M .
+          echo "::endgroup::"
+
+      - name: Install
+        run: |
+          cd frontend/
+          npm ci
+          npm run test
