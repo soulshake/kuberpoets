@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import InputForm from './components/InputForm';
 import { ResultList } from './components/Result';
-
-import { AppProvider } from './AppContext';
 
 declare global {
   interface Window {
@@ -16,16 +14,31 @@ declare global {
 
 export const App = () => {
   return (
-    <AppProvider>
-      <div className='App'>
-        <header className='App-header'>
-          <p>Enter some text below.</p>
-          <ResultList />
-          <InputForm />
-        </header>
+    <div className='App'>
+      <header className='App-header'>Kuberpoets</header>
+      <div className='Body'>
+        <AppContainer />
       </div>
-    </AppProvider>
+    </div>
   );
 };
+
+function AppContainer() {
+  const [submittedBlob, setSubmittedBlob] = useState('');
+  return (
+    <div>
+      {!submittedBlob && <p>Enter some text below.</p>}
+      <ResultList submittedBlob={submittedBlob} />
+      <InputForm setSubmittedBlob={setSubmittedBlob} />
+      <div className='Credits'>
+        The source for this repository can be found{' '}
+        <a className='App-link' href='https://github.com/soulshake/kuberpoets'>
+          on Github
+        </a>
+        .
+      </div>
+    </div>
+  );
+}
 
 export default App;

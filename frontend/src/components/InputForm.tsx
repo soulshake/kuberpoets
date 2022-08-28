@@ -1,42 +1,63 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useAppValues } from '../AppContext';
+import getRandom from '../randomPoem';
 
-function InputForm() {
-  const { setAppValues } = useAppValues();
-  const [fullBlob, setBlob] = useState('');
+interface InputFormProps {
+  setSubmittedBlob: any;
+}
+function InputForm(props: InputFormProps) {
+  const { setSubmittedBlob } = props;
+  const [blob, setBlob] = useState('');
 
   const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const lines: Array<string> = fullBlob.trim().split('\n');
-    setAppValues({
-      blob: fullBlob,
-      blobs: lines,
-    });
+    console.warn(`setting submitted blob to: '${blob}'`);
+    setSubmittedBlob(blob);
   };
 
   return (
     <div className='container'>
-      <form onSubmit={submitForm}>
+      <form onSubmit={submitForm} style={{ minWidth: '500px' }}>
         <TextField
-          className='input'
-          id='user-input'
+          autoFocus
+          fullWidth
           label='Enter some text'
           multiline
           onChange={e => setBlob(e.target.value)}
           type='text'
-          value={fullBlob}
+          value={blob}
           variant='outlined'
         />
         <div>
-          <Button type='submit' variant='outlined'>
-            Submit
+          <Button style={{ margin: '2px' }} type='submit' variant='outlined'>
+            Analyze
           </Button>
+          <RandomButton setBlob={setBlob} />
         </div>
       </form>
     </div>
+  );
+}
+
+interface RandomButtonProps {
+  setBlob: any;
+}
+function RandomButton(props: RandomButtonProps) {
+  const { setBlob } = props;
+  function handleClick() {
+    console.log('we got clicked');
+    setBlob(getRandom());
+  }
+  return (
+    <Button
+      style={{ margin: '2px' }}
+      type='button'
+      variant='outlined'
+      onClick={handleClick}
+    >
+      Random
+    </Button>
   );
 }
 
