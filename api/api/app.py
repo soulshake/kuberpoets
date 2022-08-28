@@ -76,7 +76,7 @@ def analyze():
         else:
             sentiment = "happy"
     else:
-        errors.append({"message": "no request json received"})
+        errors.append({"message": "no text received in request json"})
 
     end = time.time()
     duration = round((end - start) * 1000, 4)
