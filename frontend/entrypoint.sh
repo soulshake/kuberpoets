@@ -15,6 +15,7 @@ main() {
 window.env = {
     VERSION: "${VERSION:-unknown}",
     API_URL: "${API_URL:-http://localhost:5000}",
+    NODE_ENV: "${NODE_ENV:-notset}",
 }
 console.log(window.env)
 EOF

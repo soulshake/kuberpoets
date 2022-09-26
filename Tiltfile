@@ -1,6 +1,6 @@
 # Configurable items #######################################################
 # The lines in this block can be changed locally for development purposes.
-node_env = 'development' # Choose one of: development|production
+node_env = 'production' # Choose one of: development|production
 flask_debug = "0"        # Choose one of: 0|1
 ############################################################################
 

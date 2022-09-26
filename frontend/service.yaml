@@ -48,7 +48,7 @@ kind: Deployment
 metadata:
   name: frontend
   annotations: &annotations
-    reloader.stakater.com/auto: 'true'
+    reloader.stakater.com/auto: 'false'
   labels: &labels
     app: frontend
 spec:

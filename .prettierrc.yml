@@ -3,6 +3,7 @@ bracketSameLine: false
 bracketSpacing: true
 jsxSingleQuote: true
 printWidth: 88
+proseWrap: always
 semi: true
 singleQuote: true
 tabWidth: 2
