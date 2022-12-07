@@ -12,6 +12,18 @@ services:
     ports:
       - 5000:5000
 
+  tweet-api:
+    build:
+      args:
+        FLASK_DEBUG: ${FLASK_DEBUG:-0}
+      context: tweet-api
+    environment:
+      FLASK_DEBUG: ${FLASK_DEBUG:-0}
+    volumes:
+      - ./tweet-api/:/app
+    ports:
+      - 5000:5000
+
   frontend:
     build:
       args:
@@ -21,7 +33,7 @@ services:
     environment:
       DIST_DIR: /app/public
       API_URL: http://localhost:5000
-    volumes:
-      - ./frontend/:/app
+    # volumes:
+    #   - ./frontend/:/app
     ports:
       - 3000:3000

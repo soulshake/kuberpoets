@@ -119,9 +119,10 @@ function Sentiment(props: SentimentProps) {
     return <span>⌛</span>;
   }
   const emojis: Record<string, string> = {
-    happy: '😊',
-    sad: '😔',
-    excited: '🤩',
+    joy: '😊',
+    sadness: '😔',
+    optimism: '🤠',
+    anger: '👺'
   };
   return <span>{emojis[props.value]}</span>;
 }
