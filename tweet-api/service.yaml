@@ -1,0 +1,84 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: api${HOSTNAME_INFIX}.${DOMAIN}
+      http: &http_rules
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 5000
+  tls:
+    - secretName: api${HOSTNAME_INFIX}-tls
+      hosts:
+        - api${HOSTNAME_INFIX}.${DOMAIN}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api
+data:
+  VERSION: '${VERSION}'
+  FLASK_DEBUG: '${FLASK_DEBUG}'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      targetPort: 5000
+  selector:
+    app: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  annotations: &annotations
+    reloader.stakater.com/auto: 'true'
+  labels: &labels
+    app: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      annotations: *annotations
+      labels: *labels
+    spec:
+      containers:
+        - name: api
+          image: ${REGISTRY_SLASH}api:${VERSION}
+          imagePullPolicy: Always
+          envFrom: &envFrom
+            - configMapRef:
+                name: api
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            failureThreshold: 30
+            periodSeconds: 10
+          ports:
+            - containerPort: 5000
+---
+
